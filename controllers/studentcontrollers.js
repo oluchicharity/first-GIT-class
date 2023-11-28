@@ -50,19 +50,44 @@ exports.getAStudent= async(req,res)=>{
 
 exports. updateStudent= async(req,res)=>{
     try {
-        const student = await studentModel.findByIdAndUpdate(req.params.studentID, {new:true})
+        const studentID= await studentModel.findById(req.params.studentID)
 
-    const studentID= await studentModel.findById(req.params.studentID)
+        const student = await studentModel.findById(studentID)
         
         if(!student){
         res.status(400).json({message:` student  ${studentID} not found`})
+        const scores = req.body.score ;
+  
+      const prevScores = {
+        html: student.score.html,
+        javascript: student.score.javascript,
+        css: student.score.css,
+        node: student.score.node,
+      };
+  
+      const studentData = {
+        name: req.body.name || student.name,
+        stack: req.body.stack || student.stack,
+        score: {
+          html: scores.html || prevScores.html,
+          javascript: scores.javascript || prevScores.javascript,
+          css: scores.css || prevScores.css,
+          node: scores.node || prevScores.node,
+        },
+      };
+      
+      // update student
+      const updateStudent = await studentModel.findByIdAndUpdate(studentID, studentData, {new: true});
         }else{
-            res.status(200).json({message:`student${studentID} has been found and updated successfully`, data:student})
-        }
+            res.status(200).json({message:`student${studentID} has been found and updated successfully`, data:this.updateStudent})
+        
+}
     } catch (error) {
         res.status(500).json({message:error.message})
     }
 }
+
+
 
 //delete student
 

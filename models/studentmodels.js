@@ -15,20 +15,17 @@ const studentSchema=new mongoose.Schema({
 
     score:{
         html:{
-        type:Number,
-        new:true
+        type:Number
+        
         },
         javascript:{
-            type:Number,
-            new:true
+            type:Number
         },
         css:{
-            type:Number,
-            new:true
+            type:Number
         },
         node:{
-            type:Number,
-            new:true
+            type:Number
         },
     }
 
