@@ -10,20 +10,25 @@ const studentSchema=new mongoose.Schema({
     stack:{
         type:String,
         required:true
+        
     },
 
     score:{
         html:{
-        type:Number
+        type:Number,
+        new:true
         },
         javascript:{
-            type:Number
+            type:Number,
+            new:true
         },
         css:{
-            type:Number
+            type:Number,
+            new:true
         },
         node:{
-            type:Number
+            type:Number,
+            new:true
         },
     }
 
