@@ -4,9 +4,9 @@ const {createStudent, getAStudent, updateStudent, deleteStudent, getAll}=require
 const router = express.Router();
 router.post("/create", createStudent)
 router.get("/getAll", getAll)
-router.get("/getOne", getAStudent)
-router.put("/update", updateStudent)
-router.delete("/delete", deleteStudent)
+router.get("/getOne/:studentID", getAStudent)
+router.put("/update/:studentID", updateStudent)
+router.delete("/delete/:studentID", deleteStudent)
 
 module.exports = router;
 

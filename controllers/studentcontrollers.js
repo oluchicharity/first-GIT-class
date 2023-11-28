@@ -19,9 +19,9 @@ exports.getAll= async(req,res)=>{
     try {
         const student = await studentModel.find(req.body);
         if(!student){
-        res.status(400).json({message:`find all students here`})
+        res.status(400).json({message:`no students available`, data:student})
         }else{
-            res.status(200).json({message:`no students available`, data:student})
+            res.status(200).json({message:`find all students here`, data:student})
         }
     } catch (error) {
         res.status(500).json({message:error.message})
@@ -32,27 +32,32 @@ exports.getAll= async(req,res)=>{
 
 exports.getAStudent= async(req,res)=>{
     try {
-        const student = await studentModel.findById(req.body);
+        const studentID= await studentModel.findById(req.params.studentID)
+        const student = await studentModel.findById(req.params.studentID);
         if(!student){
         res.status(400).json({message:`no student found`})
         }else{
-            res.status(200).json({message:`student has been found`, data:student})
+            res.status(200).json({message:`student ${studentID} has been found`, data:student})
         }
     } catch (error) {
         res.status(500).json({message:error.message})
     }
 }
 
+  
+
 //update a student
 
 exports. updateStudent= async(req,res)=>{
     try {
-        const student = await studentModel.findByIdAndUpdate(req.body)
+        const student = await studentModel.findByIdAndUpdate(req.params.studentID, {new:true})
+
+    const studentID= await studentModel.findById(req.params.studentID)
         
         if(!student){
-        res.status(400).json({message:`no student found`})
+        res.status(400).json({message:` student  ${studentID} not found`})
         }else{
-            res.status(200).json({message:`student has been found`, data:student})
+            res.status(200).json({message:`student${studentID} has been found and updated successfully`, data:student})
         }
     } catch (error) {
         res.status(500).json({message:error.message})
@@ -63,11 +68,12 @@ exports. updateStudent= async(req,res)=>{
 
 exports. deleteStudent= async(req,res)=>{
     try {
-        const student = await studentModel.findByIdAndDelete(req.body);
+        const student = await studentModel.findByIdAndDelete(req.params.studentID);
+        const studentID = await studentModel.findById(req.params.studentID)
         if(!student){
-        res.status(400).json({message:`no student found`})
+        res.status(400).json({message:`no student with ${studentID} found to delete`})
         }else{
-            res.status(200).json({message:`student has been found`, data:student})
+            res.status(200).json({message:`student has been found and deleted `, data:student})
         }
     } catch (error) {
         res.status(500).json({message:error.message})
@@ -76,3 +82,4 @@ exports. deleteStudent= async(req,res)=>{
 
 
 //do new:true for updating scores
+
